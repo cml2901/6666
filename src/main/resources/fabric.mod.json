@@ -1,0 +1,20 @@
+{
+	"schemaVersion": 1,
+	"id": "villageguard",
+	"version": "${version}",
+	"name": "Village Guard",
+	"description": "Жители-стражи с железным мечом и бронёй: защищают деревню от монстров, дают сдачи, если их ударить, и сами появляются в деревнях.",
+	"authors": ["You"],
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["dev.villageguard.VillageGuardMod"],
+		"client": ["dev.villageguard.VillageGuardClient"]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.0",
+		"minecraft": ">=26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
