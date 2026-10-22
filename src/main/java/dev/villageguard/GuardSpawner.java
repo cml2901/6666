@@ -1,6 +1,9 @@
 package dev.villageguard;
 
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
@@ -8,19 +11,18 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.phys.AABB;
 
 /**
- * Когда в мире появляется новый обычный житель (генерация деревни, размножение, вылечили
- * зомби-жителя), с некоторой вероятностью рядом с ним появляется страж.
+ * Когда в мире появляется (загружается) обычный житель, с некоторой вероятностью рядом с ним
+ * появляется страж.
  *
- * Лимит: примерно один страж на трёх жителей в радиусе 48 блоков, не больше 8.
- * Уже обработанные жители помечаются тегом, поэтому при перезагрузке чанков повторного спавна нет.
+ * Лимит: примерно один страж на трёх жителей в радиусе 48 блоков, не больше 8. Благодаря лимиту
+ * повторная загрузка чанков не приводит к бесконечному спавну: стражи лишь доукомплектовываются
+ * до нормы.
  */
 public final class GuardSpawner {
-	private static final String CHECKED_TAG = "villageguard_checked";
 	private static final float SPAWN_CHANCE = 0.5F;
 	private static final int RADIUS = 48;
 	private static final int MAX_GUARDS = 8;
@@ -30,21 +32,19 @@ public final class GuardSpawner {
 	}
 
 	private static final Queue<Pending> QUEUE = new ConcurrentLinkedQueue<>();
+	// Жители, которых уже обработали в этой игровой сессии
+	private static final Set<UUID> SEEN = new HashSet<>();
 
 	private GuardSpawner() {
 	}
 
 	public static void init() {
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
-			if (entity.getType() != EntityType.VILLAGER) {
-				return; // стражи (другой тип) и всё остальное не считаются
+			if (!(entity instanceof Villager villager) || entity instanceof VillageGuardEntity) {
+				return; // стражи и всё остальное не считаются
 			}
-			if (entity.getTags().contains(CHECKED_TAG)) {
+			if (villager.isBaby() || !SEEN.add(entity.getUUID())) {
 				return;
-			}
-			entity.addTag(CHECKED_TAG);
-			if (entity instanceof LivingEntity living && living.isBaby()) {
-				return; // детей стражи не "приводят"; вырастут — уже в счёте деревни
 			}
 			QUEUE.add(new Pending(level, entity.blockPosition()));
 		});
@@ -71,7 +71,7 @@ public final class GuardSpawner {
 
 		AABB area = new AABB(pos).inflate(RADIUS);
 		int guards = level.getEntitiesOfClass(VillageGuardEntity.class, area).size();
-		int villagers = level.getEntities(EntityType.VILLAGER, area, villager -> true).size();
+		int villagers = level.getEntitiesOfClass(Villager.class, area).size() - guards;
 		int allowed = Math.min(MAX_GUARDS, (villagers + 2) / 3);
 		if (guards >= allowed) {
 			return;

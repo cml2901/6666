@@ -1,5 +1,6 @@
 package dev.villageguard;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,8 +33,6 @@ import net.minecraft.world.level.Level;
  * Мозг (Brain) жителя отключён: торговля, сон, работа и паника не нужны — ИИ задан целями (goals).
  */
 public class VillageGuardEntity extends Villager {
-	private static final String GEARED_TAG = "villageguard_geared";
-
 	public VillageGuardEntity(EntityType<? extends Villager> type, Level level) {
 		super(type, level);
 	}
@@ -72,7 +71,7 @@ public class VillageGuardEntity extends Villager {
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(
 			this, Mob.class, 5, true, false,
 			(target, level) -> target.getType().getCategory() == MobCategory.MONSTER
-				&& target.getType() != EntityType.CREEPER
+				&& !"minecraft:creeper".equals(String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(target.getType())))
 		));
 	}
 
@@ -81,17 +80,15 @@ public class VillageGuardEntity extends Villager {
 		if (victim == null) {
 			return false;
 		}
-		boolean villagerLike = victim.getType() == EntityType.VILLAGER
-			|| victim.getType() == ModEntities.VILLAGE_GUARD;
-		return villagerLike && player.tickCount - player.getLastHurtMobTimestamp() < 200;
+		// VillageGuardEntity тоже наследует Villager, так что проверка покрывает и стражей
+		return victim instanceof Villager && player.tickCount - player.getLastHurtMobTimestamp() < 200;
 	}
 
-	/** Вместо мозга жителя: выдаём снаряжение один раз и медленно лечимся вне боя. */
+	/** Вместо мозга жителя: выдаём снаряжение, если его нет, и медленно лечимся вне боя. */
 	@Override
 	protected void customServerAiStep(ServerLevel level) {
-		if (!this.getTags().contains(GEARED_TAG)) {
+		if (this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
 			giveGear();
-			this.addTag(GEARED_TAG);
 		}
 		if (this.tickCount % 100 == 0 && this.getTarget() == null && this.getHealth() < this.getMaxHealth()) {
 			this.heal(1.0F);
@@ -105,8 +102,6 @@ public class VillageGuardEntity extends Villager {
 		this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
 		this.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
 		this.setPersistenceRequired();
-		// Держимся в радиусе 32 блоков от места появления (центр деревни)
-		this.restrictTo(this.blockPosition(), 32);
 	}
 
 	/** Стражи не торгуют. */
