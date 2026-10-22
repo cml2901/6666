@@ -51,7 +51,7 @@ public class VillageGuardEntity extends Villager {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15, true));
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.3, true));
 		this.goalSelector.addGoal(3, new MoveTowardsRestrictionGoal(this, 0.8));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.6));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -69,10 +69,16 @@ public class VillageGuardEntity extends Villager {
 		// 3) Любые монстры в радиусе (зомби, скелеты, разбойники, пауки и т.д.), кроме криперов,
 		//    чтобы они не взрывали деревню.
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(
-			this, Mob.class, 5, true, false,
-			(target, level) -> target.getType().getCategory() == MobCategory.MONSTER
-				&& !"minecraft:creeper".equals(String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(target.getType())))
+			this, Mob.class, 1, false, false,
+			(target, level) -> isHostile(target)
 		));
+	}
+
+	/** Монстр, на которого стоит нападать (криперов не трогаем, чтобы не взрывали деревню). */
+	private static boolean isHostile(LivingEntity target) {
+		return target.isAlive()
+			&& target.getType().getCategory() == MobCategory.MONSTER
+			&& !"minecraft:creeper".equals(String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(target.getType())));
 	}
 
 	private static boolean hitVillagerRecently(Player player) {
@@ -89,6 +95,28 @@ public class VillageGuardEntity extends Villager {
 	protected void customServerAiStep(ServerLevel level) {
 		if (this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
 			giveGear();
+		}
+		// Активный поиск врага: каждые 5 тиков берём ближайшего монстра в радиусе 20 блоков,
+		// не дожидаясь стандартной логики выбора цели
+		if (this.tickCount % 5 == 0) {
+			LivingEntity current = this.getTarget();
+			if (current == null || !current.isAlive()) {
+				Mob best = null;
+				double bestDist = Double.MAX_VALUE;
+				for (Mob other : level.getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(20.0, 8.0, 20.0))) {
+					if (other == this || !isHostile(other)) {
+						continue;
+					}
+					double dist = this.distanceToSqr(other);
+					if (dist < bestDist) {
+						bestDist = dist;
+						best = other;
+					}
+				}
+				if (best != null) {
+					this.setTarget(best);
+				}
+			}
 		}
 		if (this.tickCount % 100 == 0 && this.getTarget() == null && this.getHealth() < this.getMaxHealth()) {
 			this.heal(1.0F);
