@@ -102,6 +102,8 @@ public class VillageGuardEntity extends Villager {
 		this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
 		this.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
 		this.setPersistenceRequired();
+		// Держимся в радиусе 32 блоков от места появления (центр деревни)
+		this.setHomeTo(this.blockPosition(), 32);
 	}
 
 	/** Стражи не торгуют. */
