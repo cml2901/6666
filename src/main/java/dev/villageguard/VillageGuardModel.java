@@ -23,10 +23,11 @@ public class VillageGuardModel extends HumanoidModel<HumanoidRenderState> {
 		MeshDefinition mesh = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);
 		PartDefinition root = mesh.getRoot();
 
-		root.addOrReplaceChild("head",
+		PartDefinition head = root.addOrReplaceChild("head",
 			CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F),
 			PartPose.ZERO);
-		root.addOrReplaceChild("hat",
+		// "hat" в HumanoidModel лежит внутри головы и двигается вместе с ней
+		head.addOrReplaceChild("hat",
 			CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)),
 			PartPose.ZERO);
 		root.addOrReplaceChild("body",
@@ -75,6 +76,5 @@ public class VillageGuardModel extends HumanoidModel<HumanoidRenderState> {
 		this.body.xRot += 0.12F * moving;
 		this.head.xRot -= 0.12F * moving;
 
-		this.hat.copyFrom(this.head);
 	}
 }
