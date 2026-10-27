@@ -1,0 +1,433 @@
+Compiled from "AttributeInstance.java"
+public class net.minecraft.world.entity.ai.attributes.AttributeInstance {
+  private final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute;
+  private final java.util.Map<net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation, java.util.Map<net.minecraft.resources.Identifier, net.minecraft.world.entity.ai.attributes.AttributeModifier>> modifiersByOperation;
+  private final java.util.Map<net.minecraft.resources.Identifier, net.minecraft.world.entity.ai.attributes.AttributeModifier> modifierById;
+  private final java.util.Map<net.minecraft.resources.Identifier, net.minecraft.world.entity.ai.attributes.AttributeModifier> permanentModifiers;
+  private double baseValue;
+  private boolean dirty;
+  private double cachedValue;
+  private final java.util.function.Consumer<net.minecraft.world.entity.ai.attributes.AttributeInstance> onDirty;
+  public net.minecraft.world.entity.ai.attributes.AttributeInstance(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, java.util.function.Consumer<net.minecraft.world.entity.ai.attributes.AttributeInstance>);
+  public net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> getAttribute();
+  public double getBaseValue();
+  public void setBaseValue(double);
+  java.util.Map<net.minecraft.resources.Identifier, net.minecraft.world.entity.ai.attributes.AttributeModifier> getModifiers(net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public java.util.Set<net.minecraft.world.entity.ai.attributes.AttributeModifier> getModifiers();
+  public java.util.Set<net.minecraft.world.entity.ai.attributes.AttributeModifier> getPermanentModifiers();
+  public net.minecraft.world.entity.ai.attributes.AttributeModifier getModifier(net.minecraft.resources.Identifier);
+  public boolean hasModifier(net.minecraft.resources.Identifier);
+  private void addModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public void addOrUpdateTransientModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public void addTransientModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public void addOrReplacePermanentModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public void addPermanentModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public void addPermanentModifiers(java.util.Collection<net.minecraft.world.entity.ai.attributes.AttributeModifier>);
+  protected void setDirty();
+  public void removeModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public boolean removeModifier(net.minecraft.resources.Identifier);
+  public void removeModifiers();
+  public double getValue();
+  private double calculateValue();
+  private java.util.Collection<net.minecraft.world.entity.ai.attributes.AttributeModifier> getModifiersOrEmpty(net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public void replaceFrom(net.minecraft.world.entity.ai.attributes.AttributeInstance);
+  public net.minecraft.world.entity.ai.attributes.AttributeInstance$Packed pack();
+  public void apply(net.minecraft.world.entity.ai.attributes.AttributeInstance$Packed);
+  private void lambda$replaceFrom$0(net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation, java.util.Map);
+  private static java.util.Map lambda$getModifiers$0(net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+}
+
+Compiled from "Attributes.java"
+public class net.minecraft.world.entity.ai.attributes.Attributes {
+  public static final double DEFAULT_ATTACK_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> AIR_DRAG_MODIFIER;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ARMOR;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ARMOR_TOUGHNESS;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_DAMAGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_KNOCKBACK;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BELOW_NAME_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BLOCK_BREAK_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BLOCK_INTERACTION_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BOUNCINESS;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BURNING_TIME;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> CAMERA_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> EXPLOSION_KNOCKBACK_RESISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ENTITY_INTERACTION_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FALL_DAMAGE_MULTIPLIER;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FLYING_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FOLLOW_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FRICTION_MODIFIER;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> GRAVITY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> JUMP_STRENGTH;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> KNOCKBACK_RESISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> LUCK;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MAX_ABSORPTION;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MAX_HEALTH;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MINING_EFFICIENCY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MOVEMENT_EFFICIENCY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MOVEMENT_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> NAME_TAG_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> OXYGEN_BONUS;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SAFE_FALL_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SCALE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SNEAKING_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SPAWN_REINFORCEMENTS_CHANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> STEP_HEIGHT;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SUBMERGED_MINING_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SWEEPING_DAMAGE_RATIO;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> TEMPT_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> WATER_MOVEMENT_EFFICIENCY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> WAYPOINT_TRANSMIT_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> WAYPOINT_RECEIVE_RANGE;
+  public net.minecraft.world.entity.ai.attributes.Attributes();
+  private static net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> register(java.lang.String, net.minecraft.world.entity.ai.attributes.Attribute);
+  public static net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> bootstrap(net.minecraft.core.Registry<net.minecraft.world.entity.ai.attributes.Attribute>);
+  static {};
+}
+
+Compiled from "TargetGoal.java"
+public abstract class net.minecraft.world.entity.ai.goal.target.TargetGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  private static final int EMPTY_REACH_CACHE;
+  private static final int CAN_REACH_CACHE;
+  private static final int CANT_REACH_CACHE;
+  protected final net.minecraft.world.entity.Mob mob;
+  protected final boolean mustSee;
+  private final boolean mustReach;
+  private int reachCache;
+  private int reachCacheTime;
+  private int unseenTicks;
+  protected net.minecraft.world.entity.LivingEntity targetMob;
+  protected int unseenMemoryTicks;
+  public net.minecraft.world.entity.ai.goal.target.TargetGoal(net.minecraft.world.entity.Mob, boolean);
+  public net.minecraft.world.entity.ai.goal.target.TargetGoal(net.minecraft.world.entity.Mob, boolean, boolean);
+  public boolean canContinueToUse();
+  protected double getFollowDistance();
+  public void start();
+  public void stop();
+  protected boolean canAttack(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.ai.targeting.TargetingConditions);
+  private boolean canReach(net.minecraft.world.entity.LivingEntity);
+  public net.minecraft.world.entity.ai.goal.target.TargetGoal setUnseenMemoryTicks(int);
+}
+
+Compiled from "Sensing.java"
+public class net.minecraft.world.entity.ai.sensing.Sensing {
+  private final net.minecraft.world.entity.Mob mob;
+  private final it.unimi.dsi.fastutil.ints.IntSet seen;
+  private final it.unimi.dsi.fastutil.ints.IntSet unseen;
+  public net.minecraft.world.entity.ai.sensing.Sensing(net.minecraft.world.entity.Mob);
+  public void tick();
+  public boolean hasLineOfSight(net.minecraft.world.entity.Entity);
+}
+
+Compiled from "AirRandomPos.java"
+public class net.minecraft.world.entity.ai.util.AirRandomPos {
+  public net.minecraft.world.entity.ai.util.AirRandomPos();
+  public static net.minecraft.world.phys.Vec3 getPosTowards(net.minecraft.world.entity.PathfinderMob, int, int, int, net.minecraft.world.phys.Vec3, double);
+  private static net.minecraft.core.BlockPos lambda$getPosTowards$0(net.minecraft.world.entity.PathfinderMob, int, int, int, net.minecraft.world.phys.Vec3, double, boolean);
+}
+
+Compiled from "AirAndWaterRandomPos.java"
+public class net.minecraft.world.entity.ai.util.AirAndWaterRandomPos {
+  public net.minecraft.world.entity.ai.util.AirAndWaterRandomPos();
+  public static net.minecraft.world.phys.Vec3 getPos(net.minecraft.world.entity.PathfinderMob, int, int, int, double, double, double);
+  public static net.minecraft.core.BlockPos generateRandomPos(net.minecraft.world.entity.PathfinderMob, int, int, int, double, double, double, boolean);
+  private static boolean lambda$generateRandomPos$0(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+  private static net.minecraft.core.BlockPos lambda$getPos$0(net.minecraft.world.entity.PathfinderMob, int, int, int, double, double, double, boolean);
+}
+
+Compiled from "DefaultRandomPos.java"
+public class net.minecraft.world.entity.ai.util.DefaultRandomPos {
+  public net.minecraft.world.entity.ai.util.DefaultRandomPos();
+  public static net.minecraft.world.phys.Vec3 getPos(net.minecraft.world.entity.PathfinderMob, int, int);
+  public static net.minecraft.world.phys.Vec3 getPosTowards(net.minecraft.world.entity.PathfinderMob, int, int, net.minecraft.world.phys.Vec3, double);
+  public static net.minecraft.world.phys.Vec3 getPosAway(net.minecraft.world.entity.PathfinderMob, int, int, net.minecraft.world.phys.Vec3);
+  private static net.minecraft.core.BlockPos generateRandomPosTowardDirection(net.minecraft.world.entity.PathfinderMob, int, boolean, net.minecraft.core.BlockPos);
+  private static net.minecraft.core.BlockPos lambda$getPosAway$0(net.minecraft.world.entity.PathfinderMob, int, int, net.minecraft.world.phys.Vec3, boolean);
+  private static net.minecraft.core.BlockPos lambda$getPosTowards$0(net.minecraft.world.entity.PathfinderMob, int, int, net.minecraft.world.phys.Vec3, double, boolean);
+  private static net.minecraft.core.BlockPos lambda$getPos$0(net.minecraft.world.entity.PathfinderMob, int, int, boolean);
+}
+
+Compiled from "GoalUtils.java"
+public class net.minecraft.world.entity.ai.util.GoalUtils {
+  public net.minecraft.world.entity.ai.util.GoalUtils();
+  public static boolean hasGroundPathNavigation(net.minecraft.world.entity.Mob);
+  public static boolean mobRestricted(net.minecraft.world.entity.PathfinderMob, double);
+  public static boolean isOutsideLimits(net.minecraft.core.BlockPos, net.minecraft.world.entity.PathfinderMob);
+  public static boolean isRestricted(boolean, net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+  public static boolean isRestricted(boolean, net.minecraft.world.entity.PathfinderMob, net.minecraft.world.phys.Vec3);
+  public static boolean isNotStable(net.minecraft.world.entity.ai.navigation.PathNavigation, net.minecraft.core.BlockPos);
+  public static boolean isWater(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+  public static boolean hasMalus(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+  public static boolean isSolid(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+}
+
+Compiled from "HoverRandomPos.java"
+public class net.minecraft.world.entity.ai.util.HoverRandomPos {
+  public net.minecraft.world.entity.ai.util.HoverRandomPos();
+  public static net.minecraft.world.phys.Vec3 getPos(net.minecraft.world.entity.PathfinderMob, int, int, double, double, float, int, int);
+  private static net.minecraft.core.BlockPos lambda$getPos$0(net.minecraft.world.entity.PathfinderMob, int, int, double, double, float, boolean, int, int);
+  private static boolean lambda$getPos$1(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+}
+
+Compiled from "LandRandomPos.java"
+public class net.minecraft.world.entity.ai.util.LandRandomPos {
+  public net.minecraft.world.entity.ai.util.LandRandomPos();
+  public static net.minecraft.world.phys.Vec3 getPos(net.minecraft.world.entity.PathfinderMob, int, int);
+  public static net.minecraft.world.phys.Vec3 getPos(net.minecraft.world.entity.PathfinderMob, int, int, java.util.function.ToDoubleFunction<net.minecraft.core.BlockPos>);
+  public static net.minecraft.world.phys.Vec3 getPosTowards(net.minecraft.world.entity.PathfinderMob, int, int, net.minecraft.world.phys.Vec3);
+  public static net.minecraft.world.phys.Vec3 getPosAway(net.minecraft.world.entity.PathfinderMob, int, int, net.minecraft.world.phys.Vec3);
+  public static net.minecraft.world.phys.Vec3 getPosAway(net.minecraft.world.entity.PathfinderMob, double, double, int, net.minecraft.world.phys.Vec3);
+  private static net.minecraft.world.phys.Vec3 getPosInDirection(net.minecraft.world.entity.PathfinderMob, double, double, int, net.minecraft.world.phys.Vec3, boolean);
+  public static net.minecraft.core.BlockPos movePosUpOutOfSolid(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+  public static net.minecraft.core.BlockPos generateRandomPosTowardDirection(net.minecraft.world.entity.PathfinderMob, double, boolean, net.minecraft.core.BlockPos);
+  private static boolean lambda$movePosUpOutOfSolid$0(net.minecraft.world.entity.PathfinderMob, net.minecraft.core.BlockPos);
+  private static net.minecraft.core.BlockPos lambda$getPosInDirection$0(net.minecraft.world.entity.PathfinderMob, double, double, int, net.minecraft.world.phys.Vec3, boolean);
+  private static net.minecraft.core.BlockPos lambda$getPos$0(net.minecraft.world.entity.PathfinderMob, int, int, boolean);
+}
+
+Compiled from "RandomPos.java"
+public class net.minecraft.world.entity.ai.util.RandomPos {
+  private static final int RANDOM_POS_ATTEMPTS;
+  public net.minecraft.world.entity.ai.util.RandomPos();
+  public static net.minecraft.core.BlockPos generateRandomDirection(net.minecraft.util.RandomSource, int, int);
+  public static net.minecraft.core.BlockPos generateRandomDirectionWithinRadians(net.minecraft.util.RandomSource, double, double, int, int, double, double, double);
+  public static net.minecraft.core.BlockPos moveUpOutOfSolid(net.minecraft.core.BlockPos, int, java.util.function.Predicate<net.minecraft.core.BlockPos>);
+  public static net.minecraft.core.BlockPos moveUpToAboveSolid(net.minecraft.core.BlockPos, int, int, java.util.function.Predicate<net.minecraft.core.BlockPos>);
+  public static net.minecraft.world.phys.Vec3 generateRandomPos(net.minecraft.world.entity.PathfinderMob, java.util.function.Supplier<net.minecraft.core.BlockPos>);
+  public static net.minecraft.world.phys.Vec3 generateRandomPos(java.util.function.Supplier<net.minecraft.core.BlockPos>, java.util.function.ToDoubleFunction<net.minecraft.core.BlockPos>);
+  public static net.minecraft.core.BlockPos generateRandomPosTowardDirection(net.minecraft.world.entity.PathfinderMob, double, net.minecraft.util.RandomSource, net.minecraft.core.BlockPos);
+}
+
+Compiled from "package-info.java"
+interface net.minecraft.world.entity.ai.util.package-info {
+}
+
+Compiled from "ClipContext.java"
+public final class net.minecraft.world.level.ClipContext$Block extends java.lang.Enum<net.minecraft.world.level.ClipContext$Block> implements net.minecraft.world.level.ClipContext$ShapeGetter {
+  public static final net.minecraft.world.level.ClipContext$Block COLLIDER;
+  public static final net.minecraft.world.level.ClipContext$Block OUTLINE;
+  public static final net.minecraft.world.level.ClipContext$Block VISUAL;
+  public static final net.minecraft.world.level.ClipContext$Block FALLDAMAGE_RESETTING;
+  private final net.minecraft.world.level.ClipContext$ShapeGetter shapeGetter;
+  private static final net.minecraft.world.level.ClipContext$Block[] $VALUES;
+  public static net.minecraft.world.level.ClipContext$Block[] values();
+  public static net.minecraft.world.level.ClipContext$Block valueOf(java.lang.String);
+  private net.minecraft.world.level.ClipContext$Block(net.minecraft.world.level.ClipContext$ShapeGetter);
+  public net.minecraft.world.phys.shapes.VoxelShape get(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  private static net.minecraft.world.level.ClipContext$Block[] $values();
+  private static net.minecraft.world.phys.shapes.VoxelShape lambda$static$0(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  static {};
+}
+
+Compiled from "ClipContext.java"
+public final class net.minecraft.world.level.ClipContext$Fluid extends java.lang.Enum<net.minecraft.world.level.ClipContext$Fluid> {
+  public static final net.minecraft.world.level.ClipContext$Fluid NONE;
+  public static final net.minecraft.world.level.ClipContext$Fluid SOURCE_ONLY;
+  public static final net.minecraft.world.level.ClipContext$Fluid ANY;
+  public static final net.minecraft.world.level.ClipContext$Fluid WATER;
+  private final java.util.function.Predicate<net.minecraft.world.level.material.FluidState> canPick;
+  private static final net.minecraft.world.level.ClipContext$Fluid[] $VALUES;
+  public static net.minecraft.world.level.ClipContext$Fluid[] values();
+  public static net.minecraft.world.level.ClipContext$Fluid valueOf(java.lang.String);
+  private net.minecraft.world.level.ClipContext$Fluid(java.util.function.Predicate<net.minecraft.world.level.material.FluidState>);
+  public boolean canPick(net.minecraft.world.level.material.FluidState);
+  private static net.minecraft.world.level.ClipContext$Fluid[] $values();
+  private static boolean lambda$static$2(net.minecraft.world.level.material.FluidState);
+  private static boolean lambda$static$1(net.minecraft.world.level.material.FluidState);
+  private static boolean lambda$static$0(net.minecraft.world.level.material.FluidState);
+  static {};
+}
+
+Compiled from "ClipContext.java"
+public interface net.minecraft.world.level.ClipContext$ShapeGetter {
+  public abstract net.minecraft.world.phys.shapes.VoxelShape get(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+}
+
+Compiled from "ClipContext.java"
+public class net.minecraft.world.level.ClipContext {
+  private final net.minecraft.world.phys.Vec3 from;
+  private final net.minecraft.world.phys.Vec3 to;
+  private final net.minecraft.world.level.ClipContext$Block block;
+  private final net.minecraft.world.level.ClipContext$Fluid fluid;
+  private final net.minecraft.world.phys.shapes.CollisionContext collisionContext;
+  public net.minecraft.world.level.ClipContext(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, net.minecraft.world.level.ClipContext$Block, net.minecraft.world.level.ClipContext$Fluid, net.minecraft.world.entity.Entity);
+  public net.minecraft.world.level.ClipContext(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, net.minecraft.world.level.ClipContext$Block, net.minecraft.world.level.ClipContext$Fluid, net.minecraft.world.phys.shapes.CollisionContext);
+  public net.minecraft.world.phys.Vec3 getTo();
+  public net.minecraft.world.phys.Vec3 getFrom();
+  public net.minecraft.world.phys.shapes.VoxelShape getBlockShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.shapes.VoxelShape getFluidShape(net.minecraft.world.level.material.FluidState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+}
+
+Compiled from "Heightmap.java"
+public final class net.minecraft.world.level.levelgen.Heightmap$Usage extends java.lang.Enum<net.minecraft.world.level.levelgen.Heightmap$Usage> {
+  public static final net.minecraft.world.level.levelgen.Heightmap$Usage WORLDGEN;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Usage LIVE_WORLD;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Usage CLIENT;
+  private static final net.minecraft.world.level.levelgen.Heightmap$Usage[] $VALUES;
+  public static net.minecraft.world.level.levelgen.Heightmap$Usage[] values();
+  public static net.minecraft.world.level.levelgen.Heightmap$Usage valueOf(java.lang.String);
+  private net.minecraft.world.level.levelgen.Heightmap$Usage();
+  private static net.minecraft.world.level.levelgen.Heightmap$Usage[] $values();
+  static {};
+}
+
+Compiled from "Heightmap.java"
+public final class net.minecraft.world.level.levelgen.Heightmap$Types extends java.lang.Enum<net.minecraft.world.level.levelgen.Heightmap$Types> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types WORLD_SURFACE_WG;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types WORLD_SURFACE;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types OCEAN_FLOOR_WG;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types OCEAN_FLOOR;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types MOTION_BLOCKING;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types MOTION_BLOCKING_NO_LEAVES;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.levelgen.Heightmap$Types> CODEC;
+  private static final java.util.function.IntFunction<net.minecraft.world.level.levelgen.Heightmap$Types> BY_ID;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.level.levelgen.Heightmap$Types> STREAM_CODEC;
+  private final int id;
+  private final java.lang.String serializationKey;
+  private final net.minecraft.world.level.levelgen.Heightmap$Usage usage;
+  private final java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> isOpaque;
+  private static final net.minecraft.world.level.levelgen.Heightmap$Types[] $VALUES;
+  public static net.minecraft.world.level.levelgen.Heightmap$Types[] values();
+  public static net.minecraft.world.level.levelgen.Heightmap$Types valueOf(java.lang.String);
+  private net.minecraft.world.level.levelgen.Heightmap$Types(int, java.lang.String, net.minecraft.world.level.levelgen.Heightmap$Usage, java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState>);
+  public java.lang.String getSerializationKey();
+  public boolean sendToClient();
+  public boolean keepAfterWorldgen();
+  public java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> isOpaque();
+  public java.lang.String getSerializedName();
+  private static net.minecraft.world.level.levelgen.Heightmap$Types[] $values();
+  private static int lambda$static$3(net.minecraft.world.level.levelgen.Heightmap$Types);
+  private static int lambda$static$2(net.minecraft.world.level.levelgen.Heightmap$Types);
+  private static boolean lambda$static$1(net.minecraft.world.level.block.state.BlockState);
+  private static boolean lambda$static$0(net.minecraft.world.level.block.state.BlockState);
+  static {};
+}
+
+Compiled from "Heightmap.java"
+public class net.minecraft.world.level.levelgen.Heightmap {
+  private static final org.slf4j.Logger LOGGER;
+  private static final java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> NOT_AIR;
+  private static final java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> MATERIAL_MOTION_BLOCKING;
+  private final net.minecraft.util.BitStorage data;
+  private final java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> isOpaque;
+  private final net.minecraft.world.level.chunk.ChunkAccess chunk;
+  public net.minecraft.world.level.levelgen.Heightmap(net.minecraft.world.level.chunk.ChunkAccess, net.minecraft.world.level.levelgen.Heightmap$Types);
+  public static void primeHeightmaps(net.minecraft.world.level.chunk.ChunkAccess, java.util.Set<net.minecraft.world.level.levelgen.Heightmap$Types>);
+  public boolean update(int, int, int, net.minecraft.world.level.block.state.BlockState);
+  public int getFirstAvailable(int, int);
+  public int getHighestTaken(int, int);
+  private int getFirstAvailable(int);
+  private void setHeight(int, int, int);
+  public void setRawData(net.minecraft.world.level.chunk.ChunkAccess, net.minecraft.world.level.levelgen.Heightmap$Types, long[]);
+  public long[] getRawData();
+  private static int getIndex(int, int);
+  private static boolean lambda$static$0(net.minecraft.world.level.block.state.BlockState);
+  static {};
+}
+
+Compiled from "BlockHitResult.java"
+public class net.minecraft.world.phys.BlockHitResult extends net.minecraft.world.phys.HitResult {
+  private final net.minecraft.core.Direction direction;
+  private final net.minecraft.core.BlockPos blockPos;
+  private final boolean miss;
+  private final boolean inside;
+  private final boolean worldBorderHit;
+  public static net.minecraft.world.phys.BlockHitResult miss(net.minecraft.world.phys.Vec3, net.minecraft.core.Direction, net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3, net.minecraft.core.Direction, net.minecraft.core.BlockPos, boolean);
+  public net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3, net.minecraft.core.Direction, net.minecraft.core.BlockPos, boolean, boolean);
+  private net.minecraft.world.phys.BlockHitResult(boolean, net.minecraft.world.phys.Vec3, net.minecraft.core.Direction, net.minecraft.core.BlockPos, boolean, boolean);
+  public net.minecraft.world.phys.BlockHitResult withDirection(net.minecraft.core.Direction);
+  public net.minecraft.world.phys.BlockHitResult withPosition(net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.BlockHitResult hitBorder();
+  public net.minecraft.core.BlockPos getBlockPos();
+  public net.minecraft.core.Direction getDirection();
+  public net.minecraft.world.phys.HitResult$Type getType();
+  public boolean isInside();
+  public boolean isWorldBorderHit();
+}
+
+Compiled from "HitResult.java"
+public abstract class net.minecraft.world.phys.HitResult {
+  protected final net.minecraft.world.phys.Vec3 location;
+  protected net.minecraft.world.phys.HitResult(net.minecraft.world.phys.Vec3);
+  public double distanceTo(net.minecraft.world.entity.Entity);
+  public abstract net.minecraft.world.phys.HitResult$Type getType();
+  public net.minecraft.world.phys.Vec3 getLocation();
+}
+
+Compiled from "Vec3.java"
+public class net.minecraft.world.phys.Vec3 implements net.minecraft.core.Position {
+  public static final com.mojang.serialization.Codec<net.minecraft.world.phys.Vec3> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.phys.Vec3> STREAM_CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.phys.Vec3> LP_STREAM_CODEC;
+  public static final net.minecraft.world.phys.Vec3 ZERO;
+  public static final net.minecraft.world.phys.Vec3 X_AXIS;
+  public static final net.minecraft.world.phys.Vec3 Y_AXIS;
+  public static final net.minecraft.world.phys.Vec3 Z_AXIS;
+  public final double x;
+  public final double y;
+  public final double z;
+  public static net.minecraft.world.phys.Vec3 atLowerCornerOf(net.minecraft.core.Vec3i);
+  public static net.minecraft.world.phys.Vec3 atLowerCornerWithOffset(net.minecraft.core.Vec3i, double, double, double);
+  public static net.minecraft.world.phys.Vec3 atCenterOf(net.minecraft.core.Vec3i);
+  public static net.minecraft.world.phys.Vec3 atBottomCenterOf(net.minecraft.core.Vec3i);
+  public static net.minecraft.world.phys.Vec3 upFromBottomCenterOf(net.minecraft.core.Vec3i, double);
+  public net.minecraft.world.phys.Vec3(double, double, double);
+  public net.minecraft.world.phys.Vec3(org.joml.Vector3fc);
+  public net.minecraft.world.phys.Vec3(net.minecraft.core.Vec3i);
+  public net.minecraft.world.phys.Vec3 vectorTo(net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 normalize();
+  public double dot(net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 cross(net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 subtract(net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 subtract(double);
+  public net.minecraft.world.phys.Vec3 subtract(double, double, double);
+  public net.minecraft.world.phys.Vec3 add(double);
+  public net.minecraft.world.phys.Vec3 add(net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 add(double, double, double);
+  public boolean closerThan(net.minecraft.core.Position, double);
+  public double distanceTo(net.minecraft.world.phys.Vec3);
+  public double distanceToSqr(net.minecraft.world.phys.Vec3);
+  public double distanceToSqr(double, double, double);
+  public boolean closerThan(net.minecraft.world.phys.Vec3, double, double);
+  public net.minecraft.world.phys.Vec3 scale(double);
+  public net.minecraft.world.phys.Vec3 reverse();
+  public net.minecraft.world.phys.Vec3 multiply(net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 multiply(double, double, double);
+  public net.minecraft.world.phys.Vec3 horizontal();
+  public net.minecraft.world.phys.Vec3 offsetRandom(net.minecraft.util.RandomSource, float);
+  public net.minecraft.world.phys.Vec3 offsetRandomXZ(net.minecraft.util.RandomSource, float);
+  public double length();
+  public double lengthSqr();
+  public double horizontalDistance();
+  public double horizontalDistanceSqr();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  public net.minecraft.world.phys.Vec3 lerp(net.minecraft.world.phys.Vec3, double);
+  public net.minecraft.world.phys.Vec3 xRot(float);
+  public net.minecraft.world.phys.Vec3 yRot(float);
+  public net.minecraft.world.phys.Vec3 zRot(float);
+  public net.minecraft.world.phys.Vec3 rotateClockwise90();
+  public static net.minecraft.world.phys.Vec3 directionFromRotation(net.minecraft.world.phys.Vec2);
+  public static net.minecraft.world.phys.Vec3 directionFromRotation(float, float);
+  public net.minecraft.world.phys.Vec2 rotation();
+  public net.minecraft.world.phys.Vec3 align(java.util.EnumSet<net.minecraft.core.Direction$Axis>);
+  public double get(net.minecraft.core.Direction$Axis);
+  public net.minecraft.world.phys.Vec3 with(net.minecraft.core.Direction$Axis, double);
+  public net.minecraft.world.phys.Vec3 relative(net.minecraft.core.Direction, double);
+  public final double x();
+  public final double y();
+  public final double z();
+  public org.joml.Vector3f toVector3f();
+  public net.minecraft.world.phys.Vec3 projectedOn(net.minecraft.world.phys.Vec3);
+  public static net.minecraft.world.phys.Vec3 applyLocalCoordinatesToRotation(net.minecraft.world.phys.Vec2, net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.phys.Vec3 addLocalCoordinates(net.minecraft.world.phys.Vec3);
+  public boolean isFinite();
+  private static java.util.List lambda$static$2(net.minecraft.world.phys.Vec3);
+  private static com.mojang.serialization.DataResult lambda$static$0(java.util.List);
+  private static net.minecraft.world.phys.Vec3 lambda$static$1(java.util.List);
+  static {};
+}
+
