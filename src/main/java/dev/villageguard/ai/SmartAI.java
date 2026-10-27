@@ -56,7 +56,6 @@ public final class SmartAI {
 		goals.addGoal(1, new AvoidEntityGoal<>(v, Monster.class, 10.0F, 0.9, 1.15));
 		goals.addGoal(4, new VillagerTorchGoal(v));
 		goals.addGoal(5, new VillagerFarmGoal(v));
-		goals.addGoal(6, new VillagerWoodcutGoal(v));
 	}
 
 	private static void addMonsterGoals(Monster m) {
