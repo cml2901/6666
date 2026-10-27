@@ -8,13 +8,12 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 
 /**
  * Человеческая модель стража: своя раскладка текстуры 64x64 (как у игрока, у каждой руки и ноги
  * своя область) и собственная анимация поверх ванильной ходьбы и удара мечом.
  */
-public class VillageGuardModel extends HumanoidModel<HumanoidRenderState> {
+public class VillageGuardModel extends HumanoidModel<GuardRenderState> {
 	public VillageGuardModel(ModelPart root) {
 		super(root);
 	}
@@ -50,7 +49,7 @@ public class VillageGuardModel extends HumanoidModel<HumanoidRenderState> {
 	}
 
 	@Override
-	public void setupAnim(HumanoidRenderState state) {
+	public void setupAnim(GuardRenderState state) {
 		super.setupAnim(state);
 
 		float t = state.ageInTicks;
