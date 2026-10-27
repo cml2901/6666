@@ -5,10 +5,7 @@ import java.util.Set;
 import dev.villageguard.VillageGuardEntity;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FleeSunGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -16,6 +13,8 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
+import net.minecraft.world.entity.monster.zombie.Drowned;
+import net.minecraft.world.entity.monster.zombie.Husk;
 import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -70,7 +69,7 @@ public final class SmartAI {
 		// Все зомби ломают двери на любой сложности
 		if (m instanceof Zombie zombie) {
 			zombie.setCanBreakDoors(true);
-			if (m.getType() == EntityType.ZOMBIE || m.getType() == EntityType.ZOMBIE_VILLAGER) {
+			if (!(m instanceof Husk) && !(m instanceof Drowned)) { // они не горят на солнце
 				goals.addGoal(3, new FleeSunGoal(m, 1.0));
 			}
 		}
