@@ -1,5 +1,6 @@
 package dev.villageguard;
 
+import dev.villageguard.ai.SmartAI;
 import net.fabricmc.api.ModInitializer;
 
 public class VillageGuardMod implements ModInitializer {
@@ -9,5 +10,6 @@ public class VillageGuardMod implements ModInitializer {
 	public void onInitialize() {
 		ModEntities.register();
 		GuardSpawner.init();
+		SmartAI.init();
 	}
 }
