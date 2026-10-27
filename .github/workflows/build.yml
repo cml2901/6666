@@ -1,7 +1,7 @@
 name: build
 on:
   push:
-    branches: [main]
+    branches: [main, smart-ai, smart-ai-v2]
   workflow_dispatch:
 
 permissions:
@@ -19,7 +19,9 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 9.5.1
-      - run: gradle build --stacktrace
+      - name: Build
+        shell: bash
+        run: gradle build --stacktrace 2>&1 | tee /tmp/build.log
       - uses: actions/upload-artifact@v4
         with:
           name: village-guard
@@ -32,6 +34,8 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p /tmp/out
+          cp /tmp/build.log /tmp/out/sigs-build.log || true
+          cp build/libs/village-guard-1.0.0.jar /tmp/out/village-guard.jar || true
           MC=""
           for J in $(find ~/.gradle -type f -name '*.jar' -size +5M | grep -vi sources); do
             if unzip -l "$J" 2>/dev/null | grep -q 'net/minecraft/client/Minecraft.class'; then MC="$J"; break; fi
@@ -42,6 +46,15 @@ jobs:
           grep -E '/(PiglinRenderer|PiglinModel|AbstractPiglin|HumanoidMobRenderer|HumanoidModel|HumanoidRenderState|ArmorModelSet|HumanoidArmorLayer|EquipmentLayerRenderer|ModelLayers|EntityRendererProvider|EntityRendererProvider\$Context|EntityRenderers|MobRenderer|LivingEntityRenderer|VillagerRenderer|ZombieRenderer|AbstractZombieRenderer|ZombieModel|ItemInHandLayer|LivingEntityRenderState|ArmedEntityRenderState|PiglinRenderState|EntityModel|LayerDefinition|MeshDefinition|PartDefinition|PartPose|CubeListBuilder|CubeDeformation|ModelPart|Entity|Mob|Villager|MeleeAttackGoal|HurtByTargetGoal|NearestAttackableTargetGoal|MoveTowardsRestrictionGoal)$' /tmp/out/sigs-classes.txt > /tmp/out/sigs-picked.txt
           : > /tmp/out/sigs.txt
           while read C; do javap -p -cp "$MC" "$C" >> /tmp/out/sigs.txt 2>&1; echo >> /tmp/out/sigs.txt; done < /tmp/out/sigs-picked.txt
+          # Сигнатуры классов ИИ (цели, навигация, мобы, жители)
+          unzip -Z1 "$MC" | grep '\.class$' | sed 's/\.class$//' | grep -E '^net/minecraft/world/entity/(ai/goal/|ai/targeting/|ai/navigation/|ai/control/|npc/villager/|monster/(Monster|zombie/|skeleton/|Spider|Creeper|Pillager|AbstractIllager|Raider|RangedAttack)|PathfinderMob|LivingEntity$|Mob$|EntityType$)|^net/minecraft/world/(level/Level$|level/LevelReader$|level/BlockGetter$|level/block/Blocks$|level/block/state/BlockState$|level/block/state/BlockBehaviour|item/Items$|item/ItemStack$|level/block/DoorBlock$|level/block/TorchBlock$)|^net/minecraft/server/level/ServerLevel$' | grep -v '\$[0-9]' > /tmp/out/sigs-ai-classes.txt
+          : > /tmp/out/sigs-ai.txt
+          while read C; do javap -p -cp "$MC" "$C" >> /tmp/out/sigs-ai.txt 2>&1; echo >> /tmp/out/sigs-ai.txt; done < /tmp/out/sigs-ai-classes.txt
+          javap -p -c -cp "$MC" net.minecraft.client.model.HumanoidModel | grep -E 'String |Method|Field' | grep -E 'String (head|hat|body|right|left|jacket|sleeve|pants)' > /tmp/out/sigs-humanoid-parts.txt || true
+          # Ещё сигнатуры: позиции, высоты, лучи, атрибуты
+          unzip -Z1 "$MC" | grep '\.class$' | sed 's/\.class$//' | grep -E '^net/minecraft/world/entity/ai/util/|^net/minecraft/world/level/levelgen/Heightmap|^net/minecraft/world/level/ClipContext|^net/minecraft/world/phys/(Vec3|HitResult|BlockHitResult)$|^net/minecraft/world/entity/ai/attributes/(AttributeInstance|Attributes)$|^net/minecraft/world/entity/ai/sensing/Sensing$|^net/minecraft/world/entity/ai/goal/target/TargetGoal$' | grep -v '\$[0-9]' > /tmp/out/sigs-ai2-classes.txt
+          : > /tmp/out/sigs-ai2.txt
+          while read C; do javap -p -cp "$MC" "$C" >> /tmp/out/sigs-ai2.txt 2>&1; echo >> /tmp/out/sigs-ai2.txt; done < /tmp/out/sigs-ai2-classes.txt
           # Список констант слоёв моделей (названия)
           javap -p -constants -cp "$MC" net.minecraft.client.model.geom.ModelLayers 2>/dev/null | grep -iE 'PIGLIN|VILLAGER|ZOMBIE\b|ARMOR' > /tmp/out/sigs-layers.txt || true
       - name: Publish signatures branch
@@ -53,6 +66,6 @@ jobs:
           git switch --orphan sigs
           git rm -rf . -q 2>/dev/null || true
           cp /tmp/out/* .
-          git add sigs*.txt
+          git add sigs* *.jar
           git commit -m "signatures" -q
           git push -f origin sigs
