@@ -50,6 +50,7 @@ jobs:
           unzip -Z1 "$MC" | grep '\.class$' | sed 's/\.class$//' | grep -E '^net/minecraft/world/entity/(ai/goal/|ai/targeting/|ai/navigation/|ai/control/|npc/villager/|monster/(Monster|zombie/|skeleton/|Spider|Creeper|Pillager|AbstractIllager|Raider|RangedAttack)|PathfinderMob|LivingEntity$|Mob$|EntityType$)|^net/minecraft/world/(level/Level$|level/LevelReader$|level/BlockGetter$|level/block/Blocks$|level/block/state/BlockState$|level/block/state/BlockBehaviour|item/Items$|item/ItemStack$|level/block/DoorBlock$|level/block/TorchBlock$)|^net/minecraft/server/level/ServerLevel$' | grep -v '\$[0-9]' > /tmp/out/sigs-ai-classes.txt
           : > /tmp/out/sigs-ai.txt
           while read C; do javap -p -cp "$MC" "$C" >> /tmp/out/sigs-ai.txt 2>&1; echo >> /tmp/out/sigs-ai.txt; done < /tmp/out/sigs-ai-classes.txt
+          javap -p -c -cp "$MC" net.minecraft.client.model.HumanoidModel | grep -E 'String |Method|Field' | grep -E 'String (head|hat|body|right|left|jacket|sleeve|pants)' > /tmp/out/sigs-humanoid-parts.txt || true
           # Список констант слоёв моделей (названия)
           javap -p -constants -cp "$MC" net.minecraft.client.model.geom.ModelLayers 2>/dev/null | grep -iE 'PIGLIN|VILLAGER|ZOMBIE\b|ARMOR' > /tmp/out/sigs-layers.txt || true
       - name: Publish signatures branch
