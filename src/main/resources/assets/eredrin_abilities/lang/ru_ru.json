@@ -1,0 +1,14 @@
+{
+  "key.categories.eredrin_abilities": "Способности Эредина",
+  "key.eredrin_abilities.radial": "Радиальное меню способностей",
+  "key.eredrin_abilities.use": "Применить способность",
+  "ability.eredrin_abilities.behind": "Телепорт за спину цели",
+  "ability.eredrin_abilities.blink": "Телепорт на прицел",
+  "ability.eredrin_abilities.ice": "Ледяные шипы",
+  "message.eredrin_abilities.selected": "Выбрано: %s",
+  "message.eredrin_abilities.cooldown": "Перезарядка: %s с",
+  "message.eredrin_abilities.no_target": "Нет цели под прицелом",
+  "message.eredrin_abilities.no_space": "Нет места для телепорта",
+  "message.eredrin_abilities.need_set": "Нужен полный комплект брони Эредина",
+  "screen.eredrin_abilities.hint": "Выберите мышью и отпустите правый Alt"
+}

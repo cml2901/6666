@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All rights reserved"
+
+[[mods]]
+modId="eredrin_abilities"
+version="1.0.0"
+displayName="Eredin Abilities"
+description='''
+Способности при полном комплекте брони Эредина (мод Fantasy Armor):
+телепорт за спину цели, телепорт на прицел, ледяные шипы.
+Радиальное меню - правый Alt, применение - X.
+'''
+
+[[dependencies.eredrin_abilities]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.eredrin_abilities]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"

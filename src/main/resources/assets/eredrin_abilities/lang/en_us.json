@@ -1,0 +1,14 @@
+{
+  "key.categories.eredrin_abilities": "Eredin Abilities",
+  "key.eredrin_abilities.radial": "Ability radial menu",
+  "key.eredrin_abilities.use": "Use ability",
+  "ability.eredrin_abilities.behind": "Teleport behind target",
+  "ability.eredrin_abilities.blink": "Teleport to crosshair",
+  "ability.eredrin_abilities.ice": "Ice spikes",
+  "message.eredrin_abilities.selected": "Selected: %s",
+  "message.eredrin_abilities.cooldown": "Cooldown: %s s",
+  "message.eredrin_abilities.no_target": "No target under the crosshair",
+  "message.eredrin_abilities.no_space": "No room to teleport",
+  "message.eredrin_abilities.need_set": "You need the full Eredin armor set",
+  "screen.eredrin_abilities.hint": "Pick with the mouse and release Right Alt"
+}
