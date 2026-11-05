@@ -1,45 +1,39 @@
 plugins {
-	// Начиная с 26.1 Майнкрафт не обфусцирован, поэтому используется Loom без ремаппинга
-	id 'net.fabricmc.fabric-loom' version "${loom_version}"
-	id 'maven-publish'
+	id 'java-library'
+	id 'net.neoforged.moddev' version "${moddev_version}"
 }
 
-version = project.mod_version
-group = project.maven_group
+version = mod_version
+group = mod_group_id
 
 base {
-	archivesName = project.archives_base_name
+	archivesName = "elderblood-addon-1.21.1"
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 repositories {
+	mavenCentral()
+	maven { name = 'Sponge'; url = 'https://repo.spongepowered.org/maven' }
 }
 
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	// Маппинги не нужны: используются официальные имена Mojang
+neoForge {
+	version = project.neo_version
 
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-}
-
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": inputs.properties.version
+	mods {
+		"${mod_id}" {
+			sourceSet(sourceSets.main)
+		}
 	}
 }
 
+dependencies {
+	// Witcher World (только классы, для компиляции) и BjornLib
+	compileOnly files('libs/witcherworld-classes.jar', 'libs/bjornlib-1.0.88.jar')
+	compileOnly 'org.spongepowered:mixin:0.8.5'
+	compileOnly 'io.github.llamalad7:mixinextras-common:0.4.1'
+}
+
 tasks.withType(JavaCompile).configureEach {
-	options.release = 25
-}
-
-java {
-	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_25
-	targetCompatibility = JavaVersion.VERSION_25
-}
-
-jar {
-	inputs.property "archivesName", project.base.archivesName
+	options.encoding = 'UTF-8'
 }

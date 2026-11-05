@@ -1,12 +1,10 @@
 name: build
 on:
   push:
-    branches: [main]
+    branches: [elder-blood-addon]
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,44 +13,27 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 25
+          java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 9.5.1
-      - run: gradle build --stacktrace
-      - uses: actions/upload-artifact@v4
-        with:
-          name: village-guard
-          path: build/libs/*.jar
-
-      # Служебный шаг: выкладывает в ветку "sigs" список классов и методов Minecraft,
-      # чтобы код можно было писать по настоящим именам, а не наугад.
-      - name: Dump Minecraft API signatures
-        if: always()
-        continue-on-error: true
+          gradle-version: '8.14.3'
+      - name: Latest versions
         run: |
-          mkdir -p /tmp/out
-          MC=""
-          for J in $(find ~/.gradle -type f -name '*.jar' -size +5M | grep -vi sources); do
-            if unzip -l "$J" 2>/dev/null | grep -q 'net/minecraft/client/Minecraft.class'; then MC="$J"; break; fi
-          done
-          echo "jar: $MC" > /tmp/out/sigs-info.txt
-          unzip -Z1 "$MC" | grep '\.class$' | sed 's/\.class$//' | grep -E 'Piglin|Humanoid|ArmorModelSet|ArmorLayer|EquipmentLayer|ModelLayers|EntityRendererProvider|EntityRenderers|VillagerRenderer|ZombieRenderer|ZombieModel|ItemInHand|RenderState|EntityModel|LayerDefinition|MeshDefinition|PartDefinition|CubeListBuilder|CubeDeformation|Villager|MeleeAttack|HurtByTarget|NearestAttackable|MoveTowards|Entity$|/Mob$|PathfinderMob' > /tmp/out/sigs-classes.txt
-          # Сигнатуры избранных классов
-          grep -E '/(PiglinRenderer|PiglinModel|AbstractPiglin|HumanoidMobRenderer|HumanoidModel|HumanoidRenderState|ArmorModelSet|HumanoidArmorLayer|EquipmentLayerRenderer|ModelLayers|EntityRendererProvider|EntityRendererProvider\$Context|EntityRenderers|MobRenderer|LivingEntityRenderer|VillagerRenderer|ZombieRenderer|AbstractZombieRenderer|ZombieModel|ItemInHandLayer|LivingEntityRenderState|ArmedEntityRenderState|PiglinRenderState|EntityModel|LayerDefinition|MeshDefinition|PartDefinition|PartPose|CubeListBuilder|CubeDeformation|ModelPart|Entity|Mob|Villager|MeleeAttackGoal|HurtByTargetGoal|NearestAttackableTargetGoal|MoveTowardsRestrictionGoal)$' /tmp/out/sigs-classes.txt > /tmp/out/sigs-picked.txt
-          : > /tmp/out/sigs.txt
-          while read C; do javap -p -cp "$MC" "$C" >> /tmp/out/sigs.txt 2>&1; echo >> /tmp/out/sigs.txt; done < /tmp/out/sigs-picked.txt
-          # Список констант слоёв моделей (названия)
-          javap -p -constants -cp "$MC" net.minecraft.client.model.geom.ModelLayers 2>/dev/null | grep -iE 'PIGLIN|VILLAGER|ZOMBIE\b|ARMOR' > /tmp/out/sigs-layers.txt || true
-      - name: Publish signatures branch
+          NEO=$(curl -s https://maven.neoforged.net/releases/net/neoforged/neoforge/maven-metadata.xml | grep -o '<version>21\.1\.[0-9]*</version>' | sed 's/<[^>]*>//g' | sort -t. -k3 -n | tail -1)
+          MDG=$(curl -s https://maven.neoforged.net/releases/net/neoforged/moddev/net.neoforged.moddev.gradle.plugin/maven-metadata.xml | grep -o '<version>2\.0\.[0-9]*</version>' | sed 's/<[^>]*>//g' | sort -t. -k3 -n | tail -1)
+          echo "NEO=$NEO MDG=$MDG"
+          [ -n "$NEO" ] && sed -i "s/^neo_version=.*/neo_version=$NEO/" gradle.properties
+          [ -n "$MDG" ] && sed -i "s/^moddev_version=.*/moddev_version=$MDG/" gradle.properties
+          cat gradle.properties
+      - name: Build
+        run: gradle build --no-daemon --stacktrace 2>&1 | tee build.log; test ${PIPESTATUS[0]} -eq 0
+      - name: Publish result
         if: always()
-        continue-on-error: true
         run: |
-          git config user.name github-actions
-          git config user.email actions@github.com
-          git switch --orphan sigs
-          git rm -rf . -q 2>/dev/null || true
-          cp /tmp/out/* .
-          git add sigs*.txt
-          git commit -m "signatures" -q
-          git push -f origin sigs
+          mkdir -p /tmp/out && cp build.log /tmp/out/ 2>/dev/null || true
+          cp build/libs/*.jar /tmp/out/ 2>/dev/null || true
+          git config user.name github-actions; git config user.email actions@github.com
+          git checkout --orphan build-output
+          git rm -rf . >/dev/null 2>&1 || true
+          cp /tmp/out/* . 
+          git add -f . && git commit -m "build output" && git push -f origin build-output
