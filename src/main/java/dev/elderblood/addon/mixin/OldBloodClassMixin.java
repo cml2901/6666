@@ -4,6 +4,7 @@ import com.furiusmax.witcherworld.client.gui.ability.AbilitiesScreen;
 import com.furiusmax.witcherworld.client.gui.ability.AbilityList;
 import com.furiusmax.witcherworld.common.classes.OldBloodClass;
 import com.furiusmax.witcherworld.common.classes.WitcherClass;
+import dev.elderblood.addon.api.WitcherHolder;
 import com.furiusmax.witcherworld.common.skills.witcher.alchemy.mutation.AcquiredTolerance;
 import com.furiusmax.witcherworld.common.skills.witcher.alchemy.oils.PoisonedBlades;
 import com.furiusmax.witcherworld.common.skills.witcher.alchemy.potions.HeightenedTolerance;

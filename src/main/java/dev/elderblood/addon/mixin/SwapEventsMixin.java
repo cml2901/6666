@@ -1,6 +1,7 @@
 package dev.elderblood.addon.mixin;
 
 import com.furiusmax.witcherworld.core.classes.AbstractPlayerClass;
+import dev.elderblood.addon.api.ClassSwap;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

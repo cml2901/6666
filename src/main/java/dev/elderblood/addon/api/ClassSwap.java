@@ -1,4 +1,4 @@
-package dev.elderblood.addon.mixin;
+package dev.elderblood.addon.api;
 
 import com.furiusmax.witcherworld.common.classes.OldBloodClass;
 import com.furiusmax.witcherworld.core.classes.AbstractPlayerClass;
