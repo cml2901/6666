@@ -3,7 +3,12 @@ package dev.elderblood.addon.mixin;
 import com.furiusmax.witcherworld.client.gui.ability.AbilitiesScreen;
 import com.furiusmax.witcherworld.client.gui.ability.AbilityList;
 import com.furiusmax.witcherworld.common.classes.OldBloodClass;
+import com.furiusmax.witcherworld.common.classes.VillagerClass;
 import com.furiusmax.witcherworld.common.classes.WitcherClass;
+import com.furiusmax.witcherworld.core.classes.IPlayerClass;
+import dev.elderblood.addon.ModAbilities;
+import java.util.ArrayList;
+import java.util.List;
 import dev.elderblood.addon.api.WitcherHolder;
 import com.furiusmax.witcherworld.common.skills.witcher.alchemy.mutation.AcquiredTolerance;
 import com.furiusmax.witcherworld.common.skills.witcher.alchemy.oils.PoisonedBlades;
@@ -20,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = OldBloodClass.class, remap = false)
-public abstract class OldBloodClassMixin implements WitcherHolder {
+public abstract class OldBloodClassMixin extends VillagerClass implements WitcherHolder {
     private static final String KEY = "ew_witcher";
 
     @Unique
@@ -65,6 +70,16 @@ public abstract class OldBloodClassMixin implements WitcherHolder {
         } catch (CloneNotSupportedException ignored) {
         }
         return copy;
+    }
+
+    /** Новые способности — в колесо Старшей крови (доступны сразу). */
+    @ModifyReturnValue(method = "classAbilities()Ljava/util/List;", at = @At("RETURN"))
+    private List<IPlayerClass.ClassAbility> ew$abilities(List<IPlayerClass.ClassAbility> original) {
+        List<IPlayerClass.ClassAbility> list = new ArrayList<>(original);
+        for (var type : ModAbilities.ALL) {
+            list.add(this.classAbility(type, false));
+        }
+        return list;
     }
 
     /** Боевое/общее/алхимическое дерево ведьмака (без знаков) — в то же дерево Старшей крови. */
