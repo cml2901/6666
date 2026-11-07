@@ -1,0 +1,15 @@
+{
+  "name": "book.elderblood_addon.eredin_diary.entry.ch1.name",
+  "description": "book.elderblood_addon.eredin_diary.entry.ch1.description",
+  "icon": "minecraft:blue_ice",
+  "x": 0,
+  "y": 0,
+  "category": "elderblood_addon:eredin_diary/main",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "book.elderblood_addon.eredin_diary.entry.ch1.page1.title",
+      "text": "book.elderblood_addon.eredin_diary.entry.ch1.page1.text"
+    }
+  ]
+}

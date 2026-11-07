@@ -1,0 +1,20 @@
+{
+  "name": "book.elderblood_addon.eredin_diary.entry.ch2.name",
+  "description": "book.elderblood_addon.eredin_diary.entry.ch2.description",
+  "icon": "minecraft:ender_eye",
+  "x": 2,
+  "y": 0,
+  "category": "elderblood_addon:eredin_diary/main",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "book.elderblood_addon.eredin_diary.entry.ch2.page1.title",
+      "text": "book.elderblood_addon.eredin_diary.entry.ch2.page1.text"
+    }
+  ],
+  "parents": [
+    {
+      "entry": "elderblood_addon:eredin_diary/main/ch1"
+    }
+  ]
+}
