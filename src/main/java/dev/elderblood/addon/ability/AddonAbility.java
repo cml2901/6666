@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.List;
@@ -21,12 +20,11 @@ import java.util.List;
 public abstract class AddonAbility extends AbilityType {
     protected AddonAbility(String path, float chaosCost, int cooldownTicks) {
         super(ResourceLocation.fromNamespaceAndPath(ElderBloodAddon.MOD_ID, path), 1, chaosCost, (float) cooldownTicks, AbilityCastType.SELF);
-        NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.addListener(this::onCast);
     }
 
     protected abstract void cast(ServerLevel level, Player player);
 
-    @SubscribeEvent
     public void onCast(AbilityEvents.CastAbility event) {
         if (event.abilityType != this) {
             return;
