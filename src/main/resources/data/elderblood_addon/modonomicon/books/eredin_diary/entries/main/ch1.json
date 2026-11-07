@@ -4,7 +4,7 @@
   "icon": "minecraft:blue_ice",
   "x": 0,
   "y": 0,
-  "category": "elderblood_addon:eredin_diary/main",
+  "category": "elderblood_addon:main",
   "pages": [
     {
       "type": "modonomicon:text",

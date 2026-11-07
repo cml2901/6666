@@ -4,7 +4,7 @@
   "icon": "minecraft:nether_star",
   "x": 6,
   "y": 0,
-  "category": "elderblood_addon:eredin_diary/main",
+  "category": "elderblood_addon:main",
   "pages": [
     {
       "type": "modonomicon:text",
@@ -14,7 +14,7 @@
   ],
   "parents": [
     {
-      "entry": "elderblood_addon:eredin_diary/main/ch3"
+      "entry": "elderblood_addon:main/ch3"
     }
   ]
 }
