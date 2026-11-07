@@ -1,0 +1,42 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All rights reserved"
+
+[[mods]]
+modId="elderblood_addon"
+version="1.2.3"
+displayName="Elder Blood Witcher"
+description='''
+Вживляет ведьмака (броня школ, древо навыков, выносливость, токсичность, слоты зелья и медальона) в класс Старшая кровь. Знаков нет. Плюс 7 новых способностей Старшей крови.
+'''
+
+[[mixins]]
+config="elderblood_addon.mixins.json"
+
+[[dependencies.elderblood_addon]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.elderblood_addon]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.elderblood_addon]]
+modId="witcherworld"
+type="required"
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.elderblood_addon]]
+modId="bjornlib"
+type="required"
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"
