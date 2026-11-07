@@ -1,0 +1,20 @@
+{
+  "name": "book.elderblood_addon.eredin_diary.entry.ch3.name",
+  "description": "book.elderblood_addon.eredin_diary.entry.ch3.description",
+  "icon": "minecraft:echo_shard",
+  "x": 4,
+  "y": 0,
+  "category": "elderblood_addon:main",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "book.elderblood_addon.eredin_diary.entry.ch3.page1.title",
+      "text": "book.elderblood_addon.eredin_diary.entry.ch3.page1.text"
+    }
+  ],
+  "parents": [
+    {
+      "entry": "elderblood_addon:main/ch2"
+    }
+  ]
+}

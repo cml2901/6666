@@ -1,0 +1,16 @@
+{
+ "ability.elderblood_addon.ciri_scream": "Ciri's Scream",
+ "witcherworld.ciri_scream.description.lvl_1": "Волна звука: урон, оглушение и отбрасывание врагов вокруг.",
+ "ability.elderblood_addon.time_stop": "Time Stop",
+ "witcherworld.time_stop.description.lvl_1": "Враги вокруг замирают на 5 секунд.",
+ "ability.elderblood_addon.space_rift": "Space Rift",
+ "witcherworld.space_rift.description.lvl_1": "Втягивает врагов в точку, куда вы смотрите.",
+ "ability.elderblood_addon.gate_portal": "Gate Portal",
+ "witcherworld.gate_portal.description.lvl_1": "Первое применение ставит первые врата, второе — вторые. Пара живёт 60 секунд, шаг в врата переносит в другие.",
+ "ability.elderblood_addon.shadow_clones": "Battle Clones",
+ "witcherworld.shadow_clones.description.lvl_1": "Два ваших клона атакуют врагов 5 секунд. Перезарядка 5 секунд.",
+ "ability.elderblood_addon.elder_fury": "Elder Blood Fury",
+ "witcherworld.elder_fury.description.lvl_1": "Увеличивает урон и скорость атаки на 1 минуту.",
+ "ability.elderblood_addon.chaos_regen": "Chaos Regeneration",
+ "witcherworld.chaos_regen.description.lvl_1": "Мгновенное лечение и быстрая регенерация."
+}

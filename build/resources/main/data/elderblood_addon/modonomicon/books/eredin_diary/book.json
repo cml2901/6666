@@ -1,0 +1,6 @@
+{
+  "name": "book.elderblood_addon.eredin_diary.name",
+  "tooltip": "book.elderblood_addon.eredin_diary.tooltip",
+  "model": "modonomicon:modonomicon_purple",
+  "generate_book_item": true
+}

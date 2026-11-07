@@ -1,0 +1,22 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - /usr/lib/jvm/temurin-21-jdk-amd64/bin/java
+ - -jar
+ - /home/runner/.gradle/caches/neoformruntime/artifacts/net/neoforged/installertools/binarypatcher/2.1.2/binarypatcher-2.1.2-fatjar.jar
+ - --clean
+ - /home/runner/.gradle/caches/neoformruntime/intermediate_results/rename_3ae1457ad10a070b0c702da8b8a7a5f78a382265_output.jar
+ - --output
+ - ./output.jar
+ - --apply
+ - ./joined.lzma
+--------------------------------------------------------------------------------
+
+Applying: 
+  Clean:     /home/runner/.gradle/caches/neoformruntime/intermediate_results/rename_3ae1457ad10a070b0c702da8b8a7a5f78a382265_output.jar
+  Output:    /home/runner/work/6666/6666/build/tmp/neoformruntime/20261107-154551_binaryPatch/./output.jar
+  KeepData:  false
+  Unpatched: false
+  Pack200:   false
+  Legacy:    false
+Loading patches file: ./joined.lzma
