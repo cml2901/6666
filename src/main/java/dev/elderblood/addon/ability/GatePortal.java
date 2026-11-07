@@ -1,5 +1,6 @@
 package dev.elderblood.addon.ability;
 
+import dev.elderblood.addon.fx.Fx;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -57,6 +58,8 @@ public class GatePortal extends AddonAbility {
             g.expire = now + 1200;
         }
         level.playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.5f, 0.7f);
+        Fx.sound(level, here, Fx.teleport(), 1.2f, 1.0f);
+        Fx.enderBurst(level, here.add(0, 1.0, 0));
     }
 
     private void onServerTick(ServerTickEvent.Post event) {
@@ -77,6 +80,8 @@ public class GatePortal extends AddonAbility {
                 if (show) {
                     level.sendParticles(ParticleTypes.PORTAL, pos.x, pos.y + 1.0, pos.z, 10, 0.3, 0.8, 0.3, 0.1);
                     level.sendParticles(ParticleTypes.REVERSE_PORTAL, pos.x, pos.y + 1.0, pos.z, 4, 0.3, 0.8, 0.3, 0.05);
+                    Fx.ring(level, Fx.wisp(0.8f, 14), pos.add(0, 1.0, 0), 0.9, 10, 0.02);
+                    level.sendParticles(Fx.spark(0.5f, 18), pos.x, pos.y + 1.0, pos.z, 3, 0.4, 0.9, 0.4, 0.01);
                 }
             }
             if (g.b == null) {
@@ -97,6 +102,8 @@ public class GatePortal extends AddonAbility {
             e.getPersistentData().putLong("ew_gate", now + 40);
             e.teleportTo(level, to.x, to.y, to.z, Set.of(), e.getYRot(), e.getXRot());
             level.playSound(null, e.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0f, 1.0f);
+            Fx.enderBurst(level, from.add(0, 1.0, 0));
+            Fx.enderBurst(level, to.add(0, 1.0, 0));
         }
     }
 }

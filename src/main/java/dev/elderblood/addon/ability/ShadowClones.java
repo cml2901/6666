@@ -2,6 +2,7 @@ package dev.elderblood.addon.ability;
 
 import dev.elderblood.addon.ModEntities;
 import dev.elderblood.addon.entity.CloneEntity;
+import dev.elderblood.addon.fx.Fx;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -29,8 +30,9 @@ public class ShadowClones extends AddonAbility {
             clone.moveTo(pos.x, pos.y, pos.z, p.getYRot(), 0);
             clone.setupFrom(p);
             level.addFreshEntity(clone);
-            level.sendParticles(ParticleTypes.PORTAL, pos.x, pos.y + 1, pos.z, 25, 0.3, 0.8, 0.3, 0.2);
+            Fx.enderBurst(level, pos.add(0, 1.0, 0));
         }
         level.playSound(null, p.blockPosition(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.PLAYERS, 1.5f, 1.0f);
+        Fx.sound(level, p.position(), Fx.teleport(), 1.0f, 1.3f);
     }
 }

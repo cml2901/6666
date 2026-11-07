@@ -88,6 +88,8 @@ public class CloneEntity extends PathfinderMob {
         if (this.tickCount >= LIFETIME) {
             if (this.level() instanceof ServerLevel sl) {
                 sl.sendParticles(ParticleTypes.POOF, getX(), getY() + 1, getZ(), 15, 0.3, 0.6, 0.3, 0.05);
+                dev.elderblood.addon.fx.Fx.enderBurst(sl, position().add(0, 1.0, 0));
+                dev.elderblood.addon.fx.Fx.sound(sl, position(), dev.elderblood.addon.fx.Fx.cloneDead(), 1.0f, 1.0f);
             }
             this.discard();
             return;

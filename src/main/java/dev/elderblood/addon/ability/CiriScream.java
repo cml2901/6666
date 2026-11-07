@@ -1,5 +1,6 @@
 package dev.elderblood.addon.ability;
 
+import dev.elderblood.addon.fx.Fx;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -22,7 +23,14 @@ public class CiriScream extends AddonAbility {
     protected void cast(ServerLevel level, Player p) {
         Vec3 c = p.position();
         level.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 2.0f, 1.2f);
+        Fx.sound(level, c, Fx.bansheeHit(), 2.0f, 0.8f);
         level.sendParticles(ParticleTypes.SONIC_BOOM, c.x, c.y + 1.0, c.z, 1, 0, 0, 0, 0);
+        Vec3 mid = c.add(0, 1.0, 0);
+        for (int i = 1; i <= 3; i++) {
+            Fx.ring(level, Fx.scream(2.2f, 20), mid, 0.6 * i, 18 + 6 * i, 0.55);
+            Fx.ring(level, Fx.cloud(1.4f, 16), mid, 0.4 * i, 14, 0.4);
+        }
+        Fx.sphere(level, Fx.spark(0.6f, 20), mid, 1.0, 24, 0.5);
         for (LivingEntity t : enemiesAround(level, p, c, 9.0)) {
             t.hurt(level.damageSources().sonicBoom(p), 10.0f);
             Vec3 dir = t.position().subtract(c).multiply(1, 0, 1).normalize();

@@ -13,6 +13,7 @@ public class ElderBloodAddon {
     public ElderBloodAddon(IEventBus modBus) {
         ModEntities.ENTITIES.register(modBus);
         ModAbilities.TYPES.register(modBus);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(new EnderPassive());
         modBus.addListener((EntityAttributeCreationEvent e) ->
                 e.put(ModEntities.CLONE.get(), CloneEntity.createAttributes().build()));
     }
