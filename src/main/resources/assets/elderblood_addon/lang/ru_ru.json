@@ -35,5 +35,17 @@
   "book.elderblood_addon.eredin_diary.entry.ch5.name": "Глава 5. Королева Старшей крови",
   "book.elderblood_addon.eredin_diary.entry.ch5.description": "Королева Старшей крови",
   "book.elderblood_addon.eredin_diary.entry.ch5.page1.title": "Глава 5",
-  "book.elderblood_addon.eredin_diary.entry.ch5.page1.text": "Ты нашёл носительницу силы. Забрать её дар и разрушить её, или предложить союз? От выбора зависит последний бой и конец Охоты.\n\nЦЕЛЬ: финальный бой.\nНАГРАДА: полный комплект Aen Elle."
+  "book.elderblood_addon.eredin_diary.entry.ch5.page1.text": "Ты нашёл носительницу силы. Забрать её дар и разрушить её, или предложить союз? От выбора зависит последний бой и конец Охоты.\n\nЦЕЛЬ: финальный бой.\nНАГРАДА: полный комплект Aen Elle.",
+  "adv.elderblood_addon.root.title": "Дневник Эредина",
+  "adv.elderblood_addon.root.desc": "Король Дикой Охоты. Твой путь начинается.",
+  "adv.elderblood_addon.ch1.title": "Глава 1. Падение Тир на Лиа",
+  "adv.elderblood_addon.ch1.desc": "Победи стража, прорвавшегося с Белым Хладом.",
+  "adv.elderblood_addon.ch2.title": "Глава 2. Врата миров",
+  "adv.elderblood_addon.ch2.desc": "Победи стража врат и открой проход между мирами.",
+  "adv.elderblood_addon.ch3.title": "Глава 3. След Старшей крови",
+  "adv.elderblood_addon.ch3.desc": "Собери 8 осколков эха: следы силы Старшей крови.",
+  "adv.elderblood_addon.ch4.title": "Глава 4. Цена силы",
+  "adv.elderblood_addon.ch4.desc": "Победи Игниса. Сила требует жертвы.",
+  "adv.elderblood_addon.ch5.title": "Глава 5. Королева Старшей крови",
+  "adv.elderblood_addon.ch5.desc": "Финальный бой: победи Жнеца."
 }

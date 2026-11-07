@@ -1,0 +1,37 @@
+{
+  "parent": "elderblood_addon:eredin/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:blue_ice"
+    },
+    "title": {
+      "translate": "adv.elderblood_addon.ch1.title"
+    },
+    "description": {
+      "translate": "adv.elderblood_addon.ch1.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "cataclysm:ender_guardian"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 600
+  }
+}
