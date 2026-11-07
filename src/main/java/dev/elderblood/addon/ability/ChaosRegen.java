@@ -14,7 +14,7 @@ public class ChaosRegen extends AddonAbility {
     public static final ChaosRegen INSTANCE = new ChaosRegen();
 
     private ChaosRegen() {
-        super("chaos_regen", 30f, 600);
+        super("chaos_regen", 5f, 40);
     }
 
     @Override

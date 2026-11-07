@@ -14,7 +14,7 @@ public class ElderFury extends AddonAbility {
     public static final ElderFury INSTANCE = new ElderFury();
 
     private ElderFury() {
-        super("elder_fury", 40f, 2400);
+        super("elder_fury", 5f, 40);
     }
 
     @Override

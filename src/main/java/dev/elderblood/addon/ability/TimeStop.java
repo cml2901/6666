@@ -17,7 +17,7 @@ public class TimeStop extends AddonAbility {
     public static final TimeStop INSTANCE = new TimeStop();
 
     private TimeStop() {
-        super("time_stop", 35f, 1200);
+        super("time_stop", 5f, 40);
     }
 
     @Override

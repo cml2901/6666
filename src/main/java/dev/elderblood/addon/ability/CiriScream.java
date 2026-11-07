@@ -16,7 +16,7 @@ public class CiriScream extends AddonAbility {
     public static final CiriScream INSTANCE = new CiriScream();
 
     private CiriScream() {
-        super("ciri_scream", 20f, 400);
+        super("ciri_scream", 5f, 40);
     }
 
     @Override

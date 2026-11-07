@@ -15,7 +15,7 @@ public class ShadowClones extends AddonAbility {
     public static final ShadowClones INSTANCE = new ShadowClones();
 
     private ShadowClones() {
-        super("shadow_clones", 20f, 100);
+        super("shadow_clones", 5f, 40);
     }
 
     @Override

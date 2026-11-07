@@ -37,7 +37,7 @@ public class GatePortal extends AddonAbility {
     private static final Map<UUID, Gate> GATES = new HashMap<>();
 
     private GatePortal() {
-        super("gate_portal", 15f, 100);
+        super("gate_portal", 5f, 40);
         NeoForge.EVENT_BUS.addListener(this::onServerTick);
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> GATES.clear());
     }

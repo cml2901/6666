@@ -16,7 +16,7 @@ public class SpaceRift extends AddonAbility {
     public static final SpaceRift INSTANCE = new SpaceRift();
 
     private SpaceRift() {
-        super("space_rift", 25f, 300);
+        super("space_rift", 5f, 40);
     }
 
     @Override
